@@ -13,6 +13,11 @@
 
 @interface WMCustomizedPageController ()
 @property (nonatomic, strong) UIView *redView;
+
+@property (nonatomic, copy) NSArray *tagTitles;
+
+
+@property (nonatomic, assign) NSInteger index;
 @end
 
 @implementation WMCustomizedPageController
@@ -31,6 +36,32 @@
     if (self.menuViewStyle == WMMenuViewStyleTriangle) {
         [self.view addSubview:self.redView];
     }
+    
+    self.tagTitles = @[@"LIST",@"INTRODUCTION", @"IMAGES", @"LIST1",@"INTRODUCTION1", @"IMAGES1"];
+    [self reloadData];
+    [self addActionButton];
+}
+
+- (void)refresh
+{
+    self.tagTitles = nil;
+    if (_index%2 == 0)
+    {
+        self.tagTitles = @[@"LIST",@"INTRODUCTION", @"IMAGES", @"LIST1",@"INTRODUCTION1", @"IMAGES1"];
+    }
+    [self reloadData];
+    _index++;
+    
+    [self addActionButton];
+}
+
+- (void)addActionButton
+{
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(120.0f, 180.0f, 100.0f, 35.0f)];
+    [btn setBackgroundColor:[UIColor yellowColor]];
+    [btn setTitle:@"Rfresh" forState:UIControlStateNormal];
+    [self.view addSubview:btn];
+    [btn addTarget:self action:@selector(refresh) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -44,20 +75,27 @@
 }
 
 - (NSInteger)numbersOfChildControllersInPageController:(WMPageController *)pageController {
-    switch (self.menuViewStyle) {
-        case WMMenuViewStyleFlood: return 3;
-        case WMMenuViewStyleSegmented: return 3;
-        default: return 10;
-    }
+//    switch (self.menuViewStyle) {
+//        case WMMenuViewStyleFlood: return 3;
+//        case WMMenuViewStyleSegmented: return 3;
+//        default: return 10;
+//    }
+    
+    return self.tagTitles.count;
 }
 
 - (NSString *)pageController:(WMPageController *)pageController titleAtIndex:(NSInteger)index {
-    switch (index % 3) {
-        case 0: return @"LIST";
-        case 1: return @"INTRODUCTION";
-        case 2: return @"IMAGES";
+//    switch (index % 3) {
+//        case 0: return @"LIST";
+//        case 1: return @"INTRODUCTION";
+//        case 2: return @"IMAGES";
+//    }
+    if(index >= self.tagTitles.count)
+    {
+        return nil;
     }
-    return @"NONE";
+    NSString *title = [self.tagTitles objectAtIndex:index];
+    return title;
 }
 
 - (UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index {

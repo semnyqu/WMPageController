@@ -347,6 +347,16 @@ static NSInteger const kWMControllerCountUndefined = -1;
     _hasInited = NO;
     NSUInteger maxIndex = (self.childControllersCount - 1 > 0) ? (self.childControllersCount - 1) : 0;
     _selectIndex = self.selectIndex < self.childControllersCount ? self.selectIndex : (int)maxIndex;
+    //处理刷新数据时menu数组为空的情况
+    if (!self.childControllersCount)
+    {
+        if (self.menuView) {
+            [self.menuView removeFromSuperview];
+            self.menuView = nil;
+        }
+        _progressWidth = 0;
+    }
+    
     if (self.progressWidth > 0) { self.progressWidth = self.progressWidth; }
     
     NSArray *displayingViewControllers = self.displayVC.allValues;
