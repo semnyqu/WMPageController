@@ -366,9 +366,10 @@ static NSInteger const kWMControllerCountUndefined = -1;
 // 当子控制器init完成时发送通知
 - (void)wm_postAddToSuperViewNotificationWithIndex:(int)index {
     if (!self.postNotification) return;
+    NSString *title = [self titleAtIndex:index];
     NSDictionary *info = @{
                            @"index":@(index),
-                           @"title":[self titleAtIndex:index]
+                           @"title": title ?: @""
                            };
     [[NSNotificationCenter defaultCenter] postNotificationName:WMControllerDidAddToSuperViewNotification
                                                         object:self
@@ -378,9 +379,10 @@ static NSInteger const kWMControllerCountUndefined = -1;
 // 当子控制器完全展示在user面前时发送通知
 - (void)wm_postFullyDisplayedNotificationWithCurrentIndex:(int)index {
     if (!self.postNotification) return;
+    NSString *title = [self titleAtIndex:index];
     NSDictionary *info = @{
                            @"index":@(index),
-                           @"title":[self titleAtIndex:index]
+                           @"title": title ?: @""
                            };
     [[NSNotificationCenter defaultCenter] postNotificationName:WMControllerDidFullyDisplayedNotification
                                                         object:self
