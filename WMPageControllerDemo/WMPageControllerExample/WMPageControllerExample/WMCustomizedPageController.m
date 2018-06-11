@@ -37,7 +37,7 @@
         [self.view addSubview:self.redView];
     }
     
-    self.tagTitles = @[@"LIST",@"INTRODUCTION", @"IMAGES", @"LIST1",@"INTRODUCTION1", @"IMAGES1"];
+    self.tagTitles = nil;//@[@"LIST",@"INTRODUCTION", @"IMAGES", @"LIST1",@"INTRODUCTION1", @"IMAGES1"];
     [self reloadData];
     [self addActionButton];
 }

@@ -354,7 +354,7 @@ static NSInteger const kWMControllerCountUndefined = -1;
             [self.menuView removeFromSuperview];
             self.menuView = nil;
         }
-        _progressWidth = 0;
+        //_progressWidth = 0;
     }
     
     if (self.progressWidth > 0) { self.progressWidth = self.progressWidth; }
