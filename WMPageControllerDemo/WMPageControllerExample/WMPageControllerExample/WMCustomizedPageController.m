@@ -38,8 +38,10 @@
     }
     
     self.tagTitles = nil;//@[@"LIST",@"INTRODUCTION", @"IMAGES", @"LIST1",@"INTRODUCTION1", @"IMAGES1"];
-    [self reloadData];
-    [self addActionButton];
+//    [self reloadData];
+//    [self addActionButton];
+    
+    [self refresh];
 }
 
 - (void)refresh
@@ -52,7 +54,7 @@
     [self reloadData];
     _index++;
     
-    [self addActionButton];
+//    [self addActionButton];
 }
 
 - (void)addActionButton

@@ -120,6 +120,8 @@
             break;
         case WMMenuViewStyleDefault: {
             vc.titleSizeSelected = 16;
+            vc.showOnNavigationBar = YES;
+            vc.menuViewLayoutMode = WMMenuViewLayoutModeCenter;
         }
             break;
         default:
