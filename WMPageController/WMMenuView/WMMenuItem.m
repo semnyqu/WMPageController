@@ -22,8 +22,11 @@
     if (self = [super initWithFrame:frame]) {
         self.normalColor   = [UIColor blackColor];
         self.selectedColor = [UIColor blackColor];
-        self.normalSize    = 15;
-        self.selectedSize  = 18;
+//        self.normalSize    = 15;
+//        self.selectedSize  = 18;
+        //默认字体样式
+        self.normalFont    = [UIFont systemFontOfSize:15];
+        self.selectedFont  = [UIFont systemFontOfSize:18 weight:UIFontWeightMedium];
         self.numberOfLines = 0;
         
         [self setupGestureRecognizer];
@@ -45,6 +48,10 @@
 
 - (void)setSelected:(BOOL)selected withAnimation:(BOOL)animation {
     _selected = selected;
+    
+    //字体样式
+    self.font = selected? _selectedFont:normal;
+    
     if (!animation) {
         self.rate = selected ? 1.0 : 0.0;
         return;
@@ -84,7 +91,13 @@
     CGFloat b = _normalBlue + (_selectedBlue - _normalBlue) * rate;
     CGFloat a = _normalAlpha + (_selectedAlpha - _normalAlpha) * rate;
     self.textColor = [UIColor colorWithRed:r green:g blue:b alpha:a];
-    CGFloat minScale = self.normalSize / self.selectedSize;
+    
+//    CGFloat minScale = self.normalSize / self.selectedSize;
+    CGFloat normalSize = self.normalFont.lineHeight;
+    CGFloat selectedSize = self.selectedFont.lineHeight;
+    
+    CGFloat minScale = normalSize / selectedSize;
+    
     CGFloat trueScale = minScale + (1 - minScale)*rate;
     self.transform = CGAffineTransformMakeScale(trueScale, trueScale);
 }

@@ -109,17 +109,21 @@
             vc.progressColor = [UIColor colorWithRed:168.0/255.0 green:20.0/255.0 blue:4/255.0 alpha:1];
             vc.showOnNavigationBar = YES;
             vc.menuViewLayoutMode = WMMenuViewLayoutModeCenter;
-            vc.titleSizeSelected = 15;
+//            vc.titleSizeSelected = 15;
+//            vc.titleFontSelected = [UIFont systemFontOfSize:15.0f weight:UIFontWeightMedium];
+            vc.titleFontSelected = [UIFont boldSystemFontOfSize:18.0f];
         }
             break;
         case WMMenuViewStyleTriangle: {
             vc.progressWidth = 6;
             vc.progressHeight = 4;
-            vc.titleSizeSelected = 15;
+            //            vc.titleSizeSelected = 15;
+            vc.titleFontSelected = [UIFont systemFontOfSize:15.0f weight:UIFontWeightMedium];
         }
             break;
         case WMMenuViewStyleDefault: {
-            vc.titleSizeSelected = 16;
+            //            vc.titleSizeSelected = 16;
+            vc.titleFontSelected = [UIFont systemFontOfSize:35 weight:UIFontWeightMedium];
             vc.showOnNavigationBar = YES;
             vc.menuViewLayoutMode = WMMenuViewLayoutModeCenter;
         }

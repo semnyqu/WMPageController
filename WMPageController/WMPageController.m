@@ -32,6 +32,19 @@ static NSInteger const kWMControllerCountUndefined = -1;
 // 收到内存警告的次数
 @property (nonatomic, assign) int memoryWarningCount;
 @property (nonatomic, readonly) NSInteger childControllersCount;
+
+/**
+ *  非选中时的标题尺寸
+ *  The normal title size (animatable)
+ */
+@property (nonatomic, assign) CGFloat innerTitleSizeNormal;
+
+/**
+ *  选中时的标题尺寸
+ *  The title size when selected (animatable)
+ */
+@property (nonatomic, assign) CGFloat innerTitleSizeSelected;
+
 @end
 
 @implementation WMPageController
@@ -405,8 +418,11 @@ static NSInteger const kWMControllerCountUndefined = -1;
 
 // 初始化一些参数，在init中调用
 - (void)wm_setup {
-    _titleSizeSelected  = 18.0f;
-    _titleSizeNormal    = 15.0f;
+    _innerTitleSizeSelected  = 18.0f;
+    _innerTitleSizeNormal    = 15.0f;
+    _titleFontSelected  = [UIFont systemFontOfSize:18.0f weight:UIFontWeightMedium];
+    _titleFontNormal    = [UIFont systemFontOfSize:15.0f];
+    
     _titleColorSelected = [UIColor colorWithRed:168.0/255.0 green:20.0/255.0 blue:4/255.0 alpha:1];
     _titleColorNormal   = [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
     _menuItemWidth = 65.0f;
@@ -477,9 +493,9 @@ static NSInteger const kWMControllerCountUndefined = -1;
     menuView.progressViewIsNaughty = self.progressViewIsNaughty;
     menuView.progressViewCornerRadius = self.progressViewCornerRadius;
     menuView.showOnNavigationBar = self.showOnNavigationBar;
-    if (self.titleFontName) {
-        menuView.fontName = self.titleFontName;
-    }
+//    if (self.titleFontName) {
+//        menuView.fontName = self.titleFontName;
+//    }
     if (self.progressColor) {
         menuView.lineColor = self.progressColor;
     }
@@ -684,7 +700,9 @@ static NSInteger const kWMControllerCountUndefined = -1;
 
 - (CGFloat)wm_calculateItemWithAtIndex:(NSInteger)index {
     NSString *title = [self titleAtIndex:index];
-    UIFont *titleFont = self.titleFontName ? [UIFont fontWithName:self.titleFontName size:self.titleSizeSelected] : [UIFont systemFontOfSize:self.titleSizeSelected];
+//    UIFont *titleFont = self.titleFontName ? [UIFont fontWithName:self.titleFontName size:self.titleSizeSelected] : [UIFont systemFontOfSize:self.titleSizeSelected];
+    //选中字体
+    UIFont *titleFont = self.titleFontSelected ?:[UIFont systemFontOfSize:self.innerTitleSizeSelected];
     NSDictionary *attrs = @{NSFontAttributeName: titleFont};
     CGFloat itemWidth = [title boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading) attributes:attrs context:nil].size.width;
     return ceil(itemWidth);
@@ -842,10 +860,18 @@ static NSInteger const kWMControllerCountUndefined = -1;
     return self.itemMargin;
 }
 
-- (CGFloat)menuView:(WMMenuView *)menu titleSizeForState:(WMMenuItemState)state atIndex:(NSInteger)index {
+//- (CGFloat)menuView:(WMMenuView *)menu titleSizeForState:(WMMenuItemState)state atIndex:(NSInteger)index {
+//    switch (state) {
+//        case WMMenuItemStateSelected: return self.titleSizeSelected;
+//        case WMMenuItemStateNormal: return self.titleSizeNormal;
+//    }
+//}
+
+- (UIFont *)menuView:(WMMenuView *)menu titleFontForState:(WMMenuItemState)state atIndex:(NSInteger)index
+{
     switch (state) {
-        case WMMenuItemStateSelected: return self.titleSizeSelected;
-        case WMMenuItemStateNormal: return self.titleSizeNormal;
+        case WMMenuItemStateSelected: return self.titleFontSelected;
+        case WMMenuItemStateNormal: return self.titleFontNormal;
     }
 }
 

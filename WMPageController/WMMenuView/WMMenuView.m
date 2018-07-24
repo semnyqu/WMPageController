@@ -169,11 +169,18 @@
     return [UIColor blackColor];
 }
 
-- (CGFloat)sizeForState:(WMMenuItemState)state atIndex:(NSInteger)index {
-    if ([self.delegate respondsToSelector:@selector(menuView:titleSizeForState:atIndex:)]) {
-        return [self.delegate menuView:self titleSizeForState:state atIndex:index];
+//- (CGFloat)sizeForState:(WMMenuItemState)state atIndex:(NSInteger)index {
+//    if ([self.delegate respondsToSelector:@selector(menuView:titleSizeForState:atIndex:)]) {
+//        return [self.delegate menuView:self titleSizeForState:state atIndex:index];
+//    }
+//    return 15.0;
+//}
+
+- (UIFont *)fontForState:(WMMenuItemState)state atIndex:(NSInteger)index {
+    if ([self.delegate respondsToSelector:@selector(menuView:titleFontForState:atIndex:)]) {
+        return [self.delegate menuView:self titleFontForState:state atIndex:index];
     }
-    return 15.0;
+    return [UIFont systemFontOfSize:15.0f];
 }
 
 - (UIView *)badgeViewAtIndex:(NSInteger)index {
@@ -485,16 +492,26 @@
         item.textAlignment = NSTextAlignmentCenter;
         item.userInteractionEnabled = YES;
         item.backgroundColor = [UIColor clearColor];
-        item.normalSize    = [self sizeForState:WMMenuItemStateNormal atIndex:i];
-        item.selectedSize  = [self sizeForState:WMMenuItemStateSelected atIndex:i];
+//        item.normalSize    = [self sizeForState:WMMenuItemStateNormal atIndex:i];
+//        item.selectedSize  = [self sizeForState:WMMenuItemStateSelected atIndex:i];
         item.normalColor   = [self colorForState:WMMenuItemStateNormal atIndex:i];
         item.selectedColor = [self colorForState:WMMenuItemStateSelected atIndex:i];
         item.speedFactor   = self.speedFactor;
-        if (self.fontName) {
-            item.font = [UIFont fontWithName:self.fontName size:item.selectedSize];
-        } else {
-            item.font = [UIFont systemFontOfSize:item.selectedSize];
+//        if (self.fontName) {
+//            item.font = [UIFont fontWithName:self.fontName size:item.selectedSize];
+//        } else {
+//            item.font = [UIFont systemFontOfSize:item.selectedSize];
+//        }
+        //字体
+        UIFont *normalFont = [self fontForState:WMMenuItemStateNormal atIndex:i];
+        item.normalFont = normalFont;
+        
+        UIFont *selectedFont = [self fontForState:WMMenuItemStateSelected atIndex:i];
+        if (!selectedFont) {
+            selectedFont = [UIFont systemFontOfSize:18.0f weight:UIFontWeightMedium];
         }
+        item.selectedFont = selectedFont;
+        
         if ([self.dataSource respondsToSelector:@selector(menuView:initialMenuItem:atIndex:)]) {
             item = [self.dataSource menuView:self initialMenuItem:item atIndex:i];
         }
