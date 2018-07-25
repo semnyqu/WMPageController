@@ -112,6 +112,7 @@
 //            vc.titleSizeSelected = 15;
 //            vc.titleFontSelected = [UIFont systemFontOfSize:15.0f weight:UIFontWeightMedium];
             vc.titleFontSelected = [UIFont boldSystemFontOfSize:18.0f];
+            vc.titleFontNormal = [UIFont systemFontOfSize:18.0f];
         }
             break;
         case WMMenuViewStyleTriangle: {

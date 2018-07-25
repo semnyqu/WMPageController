@@ -50,7 +50,7 @@
     _selected = selected;
     
     //字体样式
-    self.font = selected? _selectedFont:normal;
+    self.font = selected? _selectedFont:_normalFont;
     
     if (!animation) {
         self.rate = selected ? 1.0 : 0.0;
