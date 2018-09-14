@@ -320,6 +320,7 @@
     if (self = [super initWithFrame:frame]) {
         self.progressViewCornerRadius = WMUNDEFINED_VALUE;
         self.progressHeight = WMUNDEFINED_VALUE;
+        self.itemAnimation = YES;
     }
     return self;
 }
@@ -613,8 +614,8 @@
         [self.delegate menuView:self didSelectedIndex:menuItem.tag - WMMENUITEM_TAG_OFFSET currentIndex:currentIndex];
     }
     
-    [self.selItem setSelected:NO withAnimation:YES];
-    [menuItem setSelected:YES withAnimation:YES];
+    [self.selItem setSelected:NO withAnimation:self.itemAnimation];
+    [menuItem setSelected:YES withAnimation:self.itemAnimation];
     self.selItem = menuItem;
     
     NSTimeInterval delay = self.style == WMMenuViewStyleDefault ? 0 : 0.3f;
